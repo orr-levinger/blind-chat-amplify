@@ -1,0 +1,61 @@
+type User
+@model
+@auth(
+    rules: [
+        { allow: owner, ownerField: "id", operations: [read, update] }
+        { allow: private, provider: iam }
+    ]
+) {
+    id: ID!
+    createdAt: String
+    name: String!
+    email: String!
+    matches: [Match] @connection(name: "UserMaches", sortField: "createdAt")
+}
+
+type Match @model @auth(rules: [
+    { allow: owner, ownerField: "userId", operations: [read] }
+    { allow: private, provider: iam }
+]) {
+    id: ID!
+    aproved: Boolean
+    user: User! @connection(name: "UserMaches", sortField: "createdAt")
+    createdAt: String
+    displayName: String!
+    conversion: Conversation @connection(name: "MathConversation")
+}
+
+
+type Conversation2
+@model
+@auth(rules: [
+    { allow: owner, ownerField: "users", operations: [read] }
+    { allow: private, provider: iam }
+]) {
+    id: ID!
+    messages: [Message]
+    @connection(name: "ConversationMessages", sortField: "createdAt")
+    users: [ID]
+    matches: [Match] @connection(name: "MathConversation")
+    createdAt: String
+}
+
+
+
+type Message
+@model
+@auth(
+    rules: [
+        { allow: owner, ownerField: "author" }
+        { allow: private, provider: iam }
+        { allow: owner, ownerField: "recipient", operations: [read] }
+    ]
+) {
+    id: ID!
+    author: String!
+    recipient: ID!
+    createdAt: String
+    content: String!
+    conversation: Conversation
+    @connection(name: "ConversationMessages", sortField: "createdAt")
+}

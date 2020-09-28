@@ -1,0 +1,89 @@
+type User
+@model
+@key(
+  name: "usersByLocation"
+  fields: ["location", "id"]
+  queryField: "usersByLocation"
+)
+@auth(
+  rules: [
+    { allow: owner, ownerField: "id", operations: [read, update] }
+    { allow: private, provider: iam }
+  ]
+) {
+  id: ID!
+  location: String
+  createdAt: String
+  images: [String]
+  name: String!
+  email: String!
+  matches: [Match!]! @connection(keyName: "UserMaches", fields: ["id"], sortField: "createdAt")
+}
+
+type Match
+@key(name: "UserMaches", fields: ["userId", "createdAt"])
+@model
+@auth(
+  rules: [
+    { allow: owner, ownerField: "userId", operations: [read] }
+    { allow: private, provider: iam }
+  ]
+) {
+  id: ID!
+  aproved: Boolean!
+  userId: ID!
+  images: [String!]!
+  distance: String
+  matchRate: Float
+  createdAt: String
+  displayName: String!
+  conversation: Conversation @connection(name: "MacthConversation")
+}
+
+type Conversation
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: owner, ownerField: "users", operations: [read] }
+    { allow: private, provider: iam }
+  ]
+) {
+  id: ID!
+  messages:[Message!]! @connection(keyName:"byConversation", fields:["id"], sortField: "createdAt")
+  users: [ID]!
+  createdAt: String!
+  maches: [Match!]! @connection(name: "MacthConversation")
+}
+
+
+
+type Message
+@model(subscriptions: null)
+@key(name: "byConversation", fields: ["conversationID"])
+{
+  id: ID!
+  authorId: ID!
+  recipientId: ID!
+  createdAt: String
+  content: String!
+  messageStatus: messageStatus!
+  liked: Boolean
+  conversationID: ID!
+}
+input onCreateMessageInput {
+  recipientId: ID!
+  authorId: ID!
+}
+enum messageStatus {
+  read,
+  sent,
+}
+
+type Subscription {
+  subscribeToNewMessage(conversationID: ID!): Message
+  @aws_subscribe(mutations: ["createMessage"])
+  subscribeToUpdatedMessage(conversationID: ID!): Message
+  @aws_subscribe(mutations: ["updateMessage"])
+  subscribeToDeletedMessage(conversationID: ID!): Message
+  @aws_subscribe(mutations: ["deleteMessage"])
+}

@@ -1,0 +1,75 @@
+type User
+  @model
+  @key(
+    name: "usersByLocation"
+    fields: ["location", "id"]
+    queryField: "usersByLocation"
+  )
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "id", operations: [read, update] }
+      { allow: private, provider: iam }
+    ]
+  ) {
+  id: ID!
+  location: String
+  createdAt: String
+  images: [String]
+  name: String!
+  email: String!
+  matches: [Match!] @connection(keyName: "UserMaches", fields: ["id"], sortField: "createdAt")
+}
+
+type Match
+  @key(name: "UserMaches", fields: ["userId", "createdAt"])
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "userId", operations: [read] }
+      { allow: private, provider: iam }
+    ]
+  ) {
+  id: ID!
+  aproved: Boolean
+  userId: ID!
+  user: User
+    @connection(fields: ["userId"], name: "UserMaches", sortField: "createdAt")
+  createdAt: String
+  displayName: String!
+  cnversation: Conversation @connection(name: "MacthConversation")
+}
+
+type Conversation
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "users", operations: [read] }
+      { allow: private, provider: iam }
+    ]
+  ) {
+  id: ID!
+  messages: [Message]
+    @connection(name: "ConversationMessages", sortField: "createdAt")
+  users: [ID]!
+  createdAt: String
+  maches: [Match] @connection(name: "MacthConversation")
+}
+
+type Message
+  @model
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "author" }
+      { allow: private, provider: iam }
+      { allow: owner, ownerField: "recipient" }
+    ]
+  )
+{
+  id: ID!
+  author: ID!
+  recipient: ID!
+  createdAt: String
+  content: String!
+  conversation: Conversation
+    @connection(name: "ConversationMessages", sortField: "createdAt")
+}
