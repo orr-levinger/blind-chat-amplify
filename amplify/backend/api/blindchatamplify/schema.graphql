@@ -17,11 +17,11 @@ type User
   images: [String]
   name: String!
   email: String!
-  matches: [Match!]! @connection(keyName: "UserMaches", fields: ["id"], sortField: "createdAt")
+  matches: [Match!]! @connection(keyName: "UserMatches", fields: ["id"], sortField: "createdAt")
 }
 
 type Match
-@key(name: "UserMaches", fields: ["userId", "createdAt"])
+@key(name: "UserMatches", fields: ["userId", "createdAt"])
 @model
 @auth(
   rules: [
@@ -60,6 +60,13 @@ type Conversation
 type Message
 @model(subscriptions: null)
 @key(name: "byConversation", fields: ["conversationID"])
+@auth(
+  rules: [
+    { allow: owner, ownerField: "author" }
+    { allow: private, provider: iam }
+    { allow: owner, ownerField: "recipient", operations: [read] }
+  ]
+)
 {
   id: ID!
   authorId: ID!

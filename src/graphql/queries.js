@@ -133,7 +133,7 @@ export const getMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
@@ -165,7 +165,7 @@ export const listMatchs = /* GraphQL */ `
         createdAt
         displayName
         updatedAt
-        conversion {
+        conversation {
           id
           users
           createdAt

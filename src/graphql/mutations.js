@@ -160,7 +160,7 @@ export const createMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
@@ -190,7 +190,7 @@ export const updateMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
@@ -220,7 +220,7 @@ export const deleteMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken

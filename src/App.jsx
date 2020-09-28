@@ -17,7 +17,7 @@ function App() {
       console.log('user', user)
       console.log('recipientId', recipientId )
       let subscription2 = API.graphql(graphqlOperation(subscribeToNewMessage,{
-        conversationID: "69abbec1-316a-417f-b6b5-512727da4819"
+        conversationID: "39df7251-da3d-4dcf-9485-da5fd4e6c598"
       }))
         .subscribe({
           next: postData => {

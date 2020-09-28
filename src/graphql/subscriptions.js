@@ -139,7 +139,7 @@ export const onCreateMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
@@ -166,7 +166,7 @@ export const onUpdateMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
@@ -193,7 +193,7 @@ export const onDeleteMatch = /* GraphQL */ `
       createdAt
       displayName
       updatedAt
-      conversion {
+      conversation {
         id
         messages {
           nextToken
