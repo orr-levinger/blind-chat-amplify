@@ -1,5 +1,5 @@
 type User
-@model
+@model(subscriptions: null)
 @key(
   name: "usersByLocation"
   fields: ["location", "id"]
@@ -15,29 +15,35 @@ type User
   location: String
   createdAt: String
   images: [String]
-  name: String!
-  email: String!
+  name: String
+  phoneNumber: String
+  email: String
+  identityStatus: String
+  answeredQuestions: [AnsweredQuestion] @connection(keyName: "UserAnsweredQuestion", fields: ["id"], sortField: "createdAt")
   matches: [Match!]! @connection(keyName: "UserMatches", fields: ["id"], sortField: "createdAt")
 }
 
+
+
 type Match
 @key(name: "UserMatches", fields: ["userId", "createdAt"])
-@model
+@model(subscriptions: null)
 @auth(
   rules: [
-    { allow: owner, ownerField: "userId", operations: [read] }
+    { allow: owner, ownerField: "userId" }# todo bring back => , operations: [read]
     { allow: private, provider: iam }
   ]
 ) {
   id: ID!
-  aproved: Boolean!
+  accepted: Boolean!
+  approved: Boolean!
   userId: ID!
-  images: [String!]!
+  images: [String]!
   distance: String
   matchRate: Float
   createdAt: String
   displayName: String!
-  conversation: Conversation @connection(name: "MacthConversation")
+  conversation: Conversation @connection(name: "MatchConversation")
 }
 
 type Conversation
@@ -52,7 +58,7 @@ type Conversation
   messages:[Message!]! @connection(keyName:"byConversation", fields:["id"], sortField: "createdAt")
   users: [ID]!
   createdAt: String!
-  maches: [Match!]! @connection(name: "MacthConversation")
+  matches: [Match!]! @connection(name: "MatchConversation")
 }
 
 
@@ -77,6 +83,54 @@ type Message
   liked: Boolean
   conversationID: ID!
 }
+
+type Post
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: private, provider: iam }
+  ]
+) {
+  id: ID!
+  value: String
+}
+type Question
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: private, provider: iam }
+  ]
+){
+  id: ID!
+  body: String!
+  Feature: String!
+  createdAt: String
+  answers: [Answer]
+}
+
+type Answer
+{
+  id: ID!
+  body: String!
+  value: Float!
+  iceBreaker: String!
+}
+
+
+type AnsweredQuestion
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: private, provider: iam }
+  ]
+){
+  id: ID!
+  createdAt: String
+  userId: ID!
+  question: Question! @connection(name: "UserAnsweredQuestion")
+  answerId: ID!
+}
+
 input onCreateMessageInput {
   recipientId: ID!
   authorId: ID!
@@ -86,11 +140,19 @@ enum messageStatus {
   sent,
 }
 
+
+
 type Subscription {
-  subscribeToNewMessage(conversationID: ID!): Message
+  subscribeToNewMatch(userId: ID!): Match!
+  @aws_subscribe(mutations: ["createMatch"])
+  subscribeToUpdateMatch(userId: ID!): Match!
+  @aws_subscribe(mutations: ["updateMatch"])
+  subscribeToDeleteMatch(userId: ID!): Match!
+  @aws_subscribe(mutations: ["deleteMatch"])
+  subscribeToNewMessage(conversationID: ID!): Message!
   @aws_subscribe(mutations: ["createMessage"])
-  subscribeToUpdatedMessage(conversationID: ID!): Message
+  subscribeToUpdatedMessage(conversationID: ID!): Message!
   @aws_subscribe(mutations: ["updateMessage"])
-  subscribeToDeletedMessage(conversationID: ID!): Message
+  subscribeToDeletedMessage(conversationID: ID!): Message!
   @aws_subscribe(mutations: ["deleteMessage"])
 }

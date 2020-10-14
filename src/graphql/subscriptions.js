@@ -1,6 +1,90 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const subscribeToNewMatch = /* GraphQL */ `
+  subscription SubscribeToNewMatch($userId: ID!) {
+    subscribeToNewMatch(userId: $userId) {
+      id
+      accepted
+      approved
+      userId
+      images
+      distance
+      matchRate
+      createdAt
+      displayName
+      updatedAt
+      conversation {
+        id
+        users
+        createdAt
+        updatedAt
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const subscribeToUpdateMatch = /* GraphQL */ `
+  subscription SubscribeToUpdateMatch($userId: ID!) {
+    subscribeToUpdateMatch(userId: $userId) {
+      id
+      accepted
+      approved
+      userId
+      images
+      distance
+      matchRate
+      createdAt
+      displayName
+      updatedAt
+      conversation {
+        id
+        users
+        createdAt
+        updatedAt
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const subscribeToDeleteMatch = /* GraphQL */ `
+  subscription SubscribeToDeleteMatch($userId: ID!) {
+    subscribeToDeleteMatch(userId: $userId) {
+      id
+      accepted
+      approved
+      userId
+      images
+      distance
+      matchRate
+      createdAt
+      displayName
+      updatedAt
+      conversation {
+        id
+        users
+        createdAt
+        updatedAt
+        matches {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
+    }
+  }
+`;
 export const subscribeToNewMessage = /* GraphQL */ `
   subscription SubscribeToNewMessage($conversationID: ID!) {
     subscribeToNewMessage(conversationID: $conversationID) {
@@ -43,168 +127,6 @@ export const subscribeToDeletedMessage = /* GraphQL */ `
       liked
       conversationID
       updatedAt
-    }
-  }
-`;
-export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($id: String) {
-    onCreateUser(id: $id) {
-      id
-      location
-      createdAt
-      images
-      name
-      email
-      updatedAt
-      matches {
-        items {
-          id
-          aproved
-          userId
-          images
-          distance
-          matchRate
-          createdAt
-          displayName
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-`;
-export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($id: String) {
-    onUpdateUser(id: $id) {
-      id
-      location
-      createdAt
-      images
-      name
-      email
-      updatedAt
-      matches {
-        items {
-          id
-          aproved
-          userId
-          images
-          distance
-          matchRate
-          createdAt
-          displayName
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-`;
-export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($id: String) {
-    onDeleteUser(id: $id) {
-      id
-      location
-      createdAt
-      images
-      name
-      email
-      updatedAt
-      matches {
-        items {
-          id
-          aproved
-          userId
-          images
-          distance
-          matchRate
-          createdAt
-          displayName
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-`;
-export const onCreateMatch = /* GraphQL */ `
-  subscription OnCreateMatch($userId: String) {
-    onCreateMatch(userId: $userId) {
-      id
-      aproved
-      userId
-      images
-      distance
-      matchRate
-      createdAt
-      displayName
-      updatedAt
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users
-        createdAt
-        updatedAt
-        maches {
-          nextToken
-        }
-      }
-    }
-  }
-`;
-export const onUpdateMatch = /* GraphQL */ `
-  subscription OnUpdateMatch($userId: String) {
-    onUpdateMatch(userId: $userId) {
-      id
-      aproved
-      userId
-      images
-      distance
-      matchRate
-      createdAt
-      displayName
-      updatedAt
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users
-        createdAt
-        updatedAt
-        maches {
-          nextToken
-        }
-      }
-    }
-  }
-`;
-export const onDeleteMatch = /* GraphQL */ `
-  subscription OnDeleteMatch($userId: String) {
-    onDeleteMatch(userId: $userId) {
-      id
-      aproved
-      userId
-      images
-      distance
-      matchRate
-      createdAt
-      displayName
-      updatedAt
-      conversation {
-        id
-        messages {
-          nextToken
-        }
-        users
-        createdAt
-        updatedAt
-        maches {
-          nextToken
-        }
-      }
     }
   }
 `;
