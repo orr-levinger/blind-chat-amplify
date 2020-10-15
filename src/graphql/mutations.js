@@ -16,6 +16,16 @@ export const createUser = /* GraphQL */ `
       email
       identityStatus
       updatedAt
+      answeredQuestions {
+        items {
+          id
+          createdAt
+          userId
+          answerId
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -49,6 +59,16 @@ export const updateUser = /* GraphQL */ `
       email
       identityStatus
       updatedAt
+      answeredQuestions {
+        items {
+          id
+          createdAt
+          userId
+          answerId
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -82,6 +102,16 @@ export const deleteUser = /* GraphQL */ `
       email
       identityStatus
       updatedAt
+      answeredQuestions {
+        items {
+          id
+          createdAt
+          userId
+          answerId
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -96,6 +126,147 @@ export const deleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+    }
+  }
+`;
+export const createQuestion = /* GraphQL */ `
+  mutation CreateQuestion(
+    $input: CreateQuestionInput!
+    $condition: ModelQuestionConditionInput
+  ) {
+    createQuestion(input: $input, condition: $condition) {
+      id
+      body
+      createdAt
+      answers {
+        id
+        body
+        effects {
+          feature
+          value
+        }
+        iceBreaker
+      }
+      updatedAt
+    }
+  }
+`;
+export const updateQuestion = /* GraphQL */ `
+  mutation UpdateQuestion(
+    $input: UpdateQuestionInput!
+    $condition: ModelQuestionConditionInput
+  ) {
+    updateQuestion(input: $input, condition: $condition) {
+      id
+      body
+      createdAt
+      answers {
+        id
+        body
+        effects {
+          feature
+          value
+        }
+        iceBreaker
+      }
+      updatedAt
+    }
+  }
+`;
+export const deleteQuestion = /* GraphQL */ `
+  mutation DeleteQuestion(
+    $input: DeleteQuestionInput!
+    $condition: ModelQuestionConditionInput
+  ) {
+    deleteQuestion(input: $input, condition: $condition) {
+      id
+      body
+      createdAt
+      answers {
+        id
+        body
+        effects {
+          feature
+          value
+        }
+        iceBreaker
+      }
+      updatedAt
+    }
+  }
+`;
+export const createAnsweredQuestion = /* GraphQL */ `
+  mutation CreateAnsweredQuestion(
+    $input: CreateAnsweredQuestionInput!
+    $condition: ModelAnsweredQuestionConditionInput
+  ) {
+    createAnsweredQuestion(input: $input, condition: $condition) {
+      id
+      createdAt
+      userId
+      answerId
+      updatedAt
+      question {
+        id
+        body
+        createdAt
+        answers {
+          id
+          body
+          iceBreaker
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+export const updateAnsweredQuestion = /* GraphQL */ `
+  mutation UpdateAnsweredQuestion(
+    $input: UpdateAnsweredQuestionInput!
+    $condition: ModelAnsweredQuestionConditionInput
+  ) {
+    updateAnsweredQuestion(input: $input, condition: $condition) {
+      id
+      createdAt
+      userId
+      answerId
+      updatedAt
+      question {
+        id
+        body
+        createdAt
+        answers {
+          id
+          body
+          iceBreaker
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+export const deleteAnsweredQuestion = /* GraphQL */ `
+  mutation DeleteAnsweredQuestion(
+    $input: DeleteAnsweredQuestionInput!
+    $condition: ModelAnsweredQuestionConditionInput
+  ) {
+    deleteAnsweredQuestion(input: $input, condition: $condition) {
+      id
+      createdAt
+      userId
+      answerId
+      updatedAt
+      question {
+        id
+        body
+        createdAt
+        answers {
+          id
+          body
+          iceBreaker
+        }
+        updatedAt
       }
     }
   }
@@ -369,102 +540,6 @@ export const deleteMessage = /* GraphQL */ `
       messageStatus
       liked
       conversationID
-      updatedAt
-    }
-  }
-`;
-export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    createPost(input: $input, condition: $condition) {
-      id
-      value
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    updatePost(input: $input, condition: $condition) {
-      id
-      value
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    deletePost(input: $input, condition: $condition) {
-      id
-      value
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createQuestion = /* GraphQL */ `
-  mutation CreateQuestion(
-    $input: CreateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    createQuestion(input: $input, condition: $condition) {
-      id
-      body
-      Feature
-      createdAt
-      answers {
-        body
-        value
-        iceBreaker
-      }
-      updatedAt
-    }
-  }
-`;
-export const updateQuestion = /* GraphQL */ `
-  mutation UpdateQuestion(
-    $input: UpdateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    updateQuestion(input: $input, condition: $condition) {
-      id
-      body
-      Feature
-      createdAt
-      answers {
-        body
-        value
-        iceBreaker
-      }
-      updatedAt
-    }
-  }
-`;
-export const deleteQuestion = /* GraphQL */ `
-  mutation DeleteQuestion(
-    $input: DeleteQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    deleteQuestion(input: $input, condition: $condition) {
-      id
-      body
-      Feature
-      createdAt
-      answers {
-        body
-        value
-        iceBreaker
-      }
       updatedAt
     }
   }

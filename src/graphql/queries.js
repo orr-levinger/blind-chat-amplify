@@ -13,6 +13,16 @@ export const getUser = /* GraphQL */ `
       email
       identityStatus
       updatedAt
+      answeredQuestions {
+        items {
+          id
+          createdAt
+          userId
+          answerId
+          updatedAt
+        }
+        nextToken
+      }
       matches {
         items {
           id
@@ -48,6 +58,9 @@ export const listUsers = /* GraphQL */ `
         email
         identityStatus
         updatedAt
+        answeredQuestions {
+          nextToken
+        }
         matches {
           nextToken
         }
@@ -83,8 +96,102 @@ export const usersByLocation = /* GraphQL */ `
         email
         identityStatus
         updatedAt
+        answeredQuestions {
+          nextToken
+        }
         matches {
           nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listQuestions = /* GraphQL */ `
+  query ListQuestions(
+    $filter: ModelQuestionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        body
+        createdAt
+        answers {
+          id
+          body
+          iceBreaker
+        }
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getQuestion = /* GraphQL */ `
+  query GetQuestion($id: ID!) {
+    getQuestion(id: $id) {
+      id
+      body
+      createdAt
+      answers {
+        id
+        body
+        effects {
+          feature
+          value
+        }
+        iceBreaker
+      }
+      updatedAt
+    }
+  }
+`;
+export const getAnsweredQuestion = /* GraphQL */ `
+  query GetAnsweredQuestion($id: ID!) {
+    getAnsweredQuestion(id: $id) {
+      id
+      createdAt
+      userId
+      answerId
+      updatedAt
+      question {
+        id
+        body
+        createdAt
+        answers {
+          id
+          body
+          iceBreaker
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+export const listAnsweredQuestions = /* GraphQL */ `
+  query ListAnsweredQuestions(
+    $filter: ModelAnsweredQuestionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAnsweredQuestions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        userId
+        answerId
+        updatedAt
+        question {
+          id
+          body
+          createdAt
+          updatedAt
         }
       }
       nextToken
@@ -241,72 +348,6 @@ export const listMessages = /* GraphQL */ `
         messageStatus
         liked
         conversationID
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      id
-      value
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        value
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getQuestion = /* GraphQL */ `
-  query GetQuestion($id: ID!) {
-    getQuestion(id: $id) {
-      id
-      body
-      Feature
-      createdAt
-      answers {
-        body
-        value
-        iceBreaker
-      }
-      updatedAt
-    }
-  }
-`;
-export const listQuestions = /* GraphQL */ `
-  query ListQuestions(
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        body
-        Feature
-        createdAt
-        answers {
-          body
-          value
-          iceBreaker
-        }
         updatedAt
       }
       nextToken

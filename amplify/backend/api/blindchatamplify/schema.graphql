@@ -19,11 +19,53 @@ type User
   phoneNumber: String
   email: String
   identityStatus: String
-  answeredQuestions: [AnsweredQuestion] @connection(keyName: "UserAnsweredQuestion", fields: ["id"], sortField: "createdAt")
+  answeredQuestions: [AnsweredQuestion!]! @connection(keyName: "byUser", fields:["id"], sortField: "createdAt")
   matches: [Match!]! @connection(keyName: "UserMatches", fields: ["id"], sortField: "createdAt")
 }
 
+type Question
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: private, provider: iam }
+  ]
+){
+  id: ID!
+  body: String!
+  createdAt: String
+  answers: [Answer]
+}
 
+type Answer
+{
+  id: ID!
+  body: String!
+  effects: [Effect!]!
+  iceBreaker: String!
+}
+
+type Effect
+{
+  feature: String!
+  value: Float!
+}
+
+
+type AnsweredQuestion
+@model(subscriptions: null)
+@auth(
+  rules: [
+    { allow: private, provider: iam }
+    { allow: owner, ownerField: "userId" }
+  ]
+)
+@key(name: "byUser", fields: ["userId", "createdAt"]){
+  id: ID!
+  createdAt: String
+  userId: ID!
+  question: Question! @connection
+  answerId: ID!
+}
 
 type Match
 @key(name: "UserMatches", fields: ["userId", "createdAt"])
@@ -82,53 +124,6 @@ type Message
   messageStatus: messageStatus!
   liked: Boolean
   conversationID: ID!
-}
-
-type Post
-@model(subscriptions: null)
-@auth(
-  rules: [
-    { allow: private, provider: iam }
-  ]
-) {
-  id: ID!
-  value: String
-}
-type Question
-@model(subscriptions: null)
-@auth(
-  rules: [
-    { allow: private, provider: iam }
-  ]
-){
-  id: ID!
-  body: String!
-  Feature: String!
-  createdAt: String
-  answers: [Answer]
-}
-
-type Answer
-{
-  id: ID!
-  body: String!
-  value: Float!
-  iceBreaker: String!
-}
-
-
-type AnsweredQuestion
-@model(subscriptions: null)
-@auth(
-  rules: [
-    { allow: private, provider: iam }
-  ]
-){
-  id: ID!
-  createdAt: String
-  userId: ID!
-  question: Question! @connection(name: "UserAnsweredQuestion")
-  answerId: ID!
 }
 
 input onCreateMessageInput {
