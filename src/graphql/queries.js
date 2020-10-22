@@ -10,8 +10,19 @@ export const getUser = /* GraphQL */ `
       images
       name
       phoneNumber
+      DOB
+      intrests
+      gender
+      sexualOrientation
       email
       identityStatus
+      matchFilters {
+        gender
+        sexualOrientation
+        maxAge
+        distance
+        minAge
+      }
       updatedAt
       answeredQuestions {
         items {
@@ -30,6 +41,7 @@ export const getUser = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -55,8 +67,19 @@ export const listUsers = /* GraphQL */ `
         images
         name
         phoneNumber
+        DOB
+        intrests
+        gender
+        sexualOrientation
         email
         identityStatus
+        matchFilters {
+          gender
+          sexualOrientation
+          maxAge
+          distance
+          minAge
+        }
         updatedAt
         answeredQuestions {
           nextToken
@@ -93,8 +116,19 @@ export const usersByLocation = /* GraphQL */ `
         images
         name
         phoneNumber
+        DOB
+        intrests
+        gender
+        sexualOrientation
         email
         identityStatus
+        matchFilters {
+          gender
+          sexualOrientation
+          maxAge
+          distance
+          minAge
+        }
         updatedAt
         answeredQuestions {
           nextToken
@@ -206,6 +240,7 @@ export const getMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -239,6 +274,7 @@ export const listMatchs = /* GraphQL */ `
         approved
         userId
         images
+        intrests
         distance
         matchRate
         createdAt
@@ -292,6 +328,7 @@ export const getConversation = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt

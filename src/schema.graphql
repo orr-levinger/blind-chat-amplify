@@ -18,6 +18,7 @@ type User
   name: String!
   email: String!
   matches: [Match!] @connection(keyName: "UserMaches", fields: ["id"], sortField: "createdAt")
+  matchFilters:
 }
 
 type Match

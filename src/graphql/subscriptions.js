@@ -9,6 +9,7 @@ export const subscribeToNewMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -37,6 +38,7 @@ export const subscribeToUpdateMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -65,6 +67,7 @@ export const subscribeToDeleteMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt

@@ -13,8 +13,19 @@ export const createUser = /* GraphQL */ `
       images
       name
       phoneNumber
+      DOB
+      intrests
+      gender
+      sexualOrientation
       email
       identityStatus
+      matchFilters {
+        gender
+        sexualOrientation
+        maxAge
+        distance
+        minAge
+      }
       updatedAt
       answeredQuestions {
         items {
@@ -33,6 +44,7 @@ export const createUser = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -56,8 +68,19 @@ export const updateUser = /* GraphQL */ `
       images
       name
       phoneNumber
+      DOB
+      intrests
+      gender
+      sexualOrientation
       email
       identityStatus
+      matchFilters {
+        gender
+        sexualOrientation
+        maxAge
+        distance
+        minAge
+      }
       updatedAt
       answeredQuestions {
         items {
@@ -76,6 +99,7 @@ export const updateUser = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -99,8 +123,19 @@ export const deleteUser = /* GraphQL */ `
       images
       name
       phoneNumber
+      DOB
+      intrests
+      gender
+      sexualOrientation
       email
       identityStatus
+      matchFilters {
+        gender
+        sexualOrientation
+        maxAge
+        distance
+        minAge
+      }
       updatedAt
       answeredQuestions {
         items {
@@ -119,6 +154,7 @@ export const deleteUser = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -282,6 +318,7 @@ export const createMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -313,6 +350,7 @@ export const updateMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -344,6 +382,7 @@ export const deleteMatch = /* GraphQL */ `
       approved
       userId
       images
+      intrests
       distance
       matchRate
       createdAt
@@ -381,6 +420,7 @@ export const createConversation = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -423,6 +463,7 @@ export const updateConversation = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt
@@ -465,6 +506,7 @@ export const deleteConversation = /* GraphQL */ `
           approved
           userId
           images
+          intrests
           distance
           matchRate
           createdAt

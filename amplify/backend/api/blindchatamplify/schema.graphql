@@ -17,12 +17,26 @@ type User
   images: [String]
   name: String
   phoneNumber: String
+  DOB: String
+  intrests: [String!]!
+  gender: String
+  sexualOrientation: String
   email: String
   identityStatus: String
   answeredQuestions: [AnsweredQuestion!]! @connection(keyName: "byUser", fields:["id"], sortField: "createdAt")
   matches: [Match!]! @connection(keyName: "UserMatches", fields: ["id"], sortField: "createdAt")
+  matchFilters: MatchFilters
 }
 
+
+type MatchFilters
+{
+  gender: String!
+  sexualOrientation: String!
+  maxAge: Int!
+  distance: Float!
+  minAge: Int!
+}
 type Question
 @model(subscriptions: null)
 @auth(
@@ -81,6 +95,7 @@ type Match
   approved: Boolean!
   userId: ID!
   images: [String]!
+  intrests: [String!]!
   distance: String
   matchRate: Float
   createdAt: String
